@@ -1,0 +1,53 @@
+// RosettaForge challenge specimen
+// id:        arith-002
+// title:     Factorial
+// category:  arithmetic
+// language:  java
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(1): iterative multiplication loop.
+
+// Edge variant covers large factorials that still fit in i64.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "public static long factorial(int n) { if (n < 0) return 0; long result = 1; for (int i = 2; i <= n; i++) result *= i; return result; }"
+}
+
+fn factorial(n: int) -> int {
+    var result = 1
+    var i = 2
+    while i <= n {
+        result = result * i
+        i = i + 1
+    }
+    return result
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: zero; expected: 1
+    if factorial(0) != 1 {
+        print("FAIL zero expected 1 got " + str_of_i64(factorial(0)))
+        failures = failures + 1
+    } else {
+        print("PASS zero = 1")
+    }
+    // input: 12 factorial; expected: 479001600
+    if factorial(12) != 479001600 {
+        print("FAIL 12 factorial expected 479001600 got " + str_of_i64(factorial(12)))
+        failures = failures + 1
+    } else {
+        print("PASS 12 factorial = 479001600")
+    }
+    // input: 20 factorial (fits i64); expected: 2432902008176640000
+    if factorial(20) != 2432902008176640000 {
+        print("FAIL 20 factorial (fits i64) expected 2432902008176640000 got " + str_of_i64(factorial(20)))
+        failures = failures + 1
+    } else {
+        print("PASS 20 factorial (fits i64) = 2432902008176640000")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

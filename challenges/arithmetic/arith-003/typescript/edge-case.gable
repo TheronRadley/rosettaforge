@@ -1,0 +1,61 @@
+// RosettaForge challenge specimen
+// id:        arith-003
+// title:     Greatest Common Divisor
+// category:  arithmetic
+// language:  typescript
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(log(min(a,b))), space O(1): Euclidean algorithm.
+
+// Edge variant covers zero arguments and both-zero case.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "function gcd(a: number, b: number): number { if (a === 0) return b; if (b === 0) return a; while (b !== 0) { let t = b; b = a % b; a = t; }; return a; }"
+}
+
+fn gcd(a: int, b: int) -> int {
+    var x = a
+    var y = b
+    while y != 0 {
+        let t = y
+        y = x % y
+        x = t
+    }
+    return x
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: zero first argument; expected: 5
+    if gcd(0, 5) != 5 {
+        print("FAIL zero first argument expected 5 got " + str_of_i64(gcd(0, 5)))
+        failures = failures + 1
+    } else {
+        print("PASS zero first argument = 5")
+    }
+    // input: zero second argument; expected: 5
+    if gcd(5, 0) != 5 {
+        print("FAIL zero second argument expected 5 got " + str_of_i64(gcd(5, 0)))
+        failures = failures + 1
+    } else {
+        print("PASS zero second argument = 5")
+    }
+    // input: both zero; expected: 0
+    if gcd(0, 0) != 0 {
+        print("FAIL both zero expected 0 got " + str_of_i64(gcd(0, 0)))
+        failures = failures + 1
+    } else {
+        print("PASS both zero = 0")
+    }
+    // input: large and one; expected: 1
+    if gcd(1000000, 1) != 1 {
+        print("FAIL large and one expected 1 got " + str_of_i64(gcd(1000000, 1)))
+        failures = failures + 1
+    } else {
+        print("PASS large and one = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

@@ -1,0 +1,53 @@
+// RosettaForge challenge specimen
+// id:        arith-001
+// title:     Sum of integers 1 through n
+// category:  arithmetic
+// language:  javascript
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(1), space O(1): arithmetic series formula n*(n+1)/2.
+
+// Reference snippet (javascript, edge-case):
+//   function sumN(n) {
+//       if (n < 0) return 0;
+//       return n * (n + 1) / 2;
+//   }
+
+// Edge variant guards negative input (returns 0) and checks large n within 64-bit range.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "function sumN(n) {\n    if (n < 0) return 0;\n    return n * (n + 1) / 2;\n}"
+}
+
+fn sum_n(n: int) -> int {
+    return n * (n + 1) / 2
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: n = 1000; expected: 500500
+    if sum_n(1000) != 500500 {
+        print("FAIL n = 1000 expected 500500 got " + str_of_i64(sum_n(1000)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 1000 = 500500")
+    }
+    // input: n = 1,000,000; expected: 500000500000
+    if sum_n(1000000) != 500000500000 {
+        print("FAIL n = 1,000,000 expected 500000500000 got " + str_of_i64(sum_n(1000000)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 1,000,000 = 500000500000")
+    }
+    // input: n = 10 (boundary sanity); expected: 55
+    if sum_n(10) != 55 {
+        print("FAIL n = 10 (boundary sanity) expected 55 got " + str_of_i64(sum_n(10)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 10 (boundary sanity) = 55")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

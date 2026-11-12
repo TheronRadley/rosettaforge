@@ -1,0 +1,66 @@
+// RosettaForge challenge specimen
+// id:        sort-002
+// title:     Insertion Sort
+// category:  sorting
+// language:  swift
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n^2), space O(n): insertion sort building sorted prefix.
+
+// Edge variant covers reverse-ish input, already-sorted, and duplicates.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "func insertionSort(_ a: inout [Int]) { for i in 1..<a.count { var key = a[i]; var j = i - 1; while j >= 0 && a[j] > key { a[j + 1] = a[j]; j -= 1 }; a[j + 1] = key }; }"
+}
+
+fn insertion_sort(values: [int]) -> [int] {
+    let result = values
+    var i = 1
+    while i < result.len {
+        let key = result[i]
+        var j = i - 1
+        while j >= 0 && result[j] > key {
+            result[j + 1] = result[j]
+            j = j - 1
+        }
+        result[j + 1] = key
+        i = i + 1
+    }
+    return result
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: first element after sort; expected: 1
+    if insertion_sort([3, 1, 2])[0] != 1 {
+        print("FAIL first element after sort expected 1 got " + str_of_i64(insertion_sort([3, 1, 2])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS first element after sort = 1")
+    }
+    // input: second element after sort; expected: 2
+    if insertion_sort([3, 1, 2])[1] != 2 {
+        print("FAIL second element after sort expected 2 got " + str_of_i64(insertion_sort([3, 1, 2])[1]))
+        failures = failures + 1
+    } else {
+        print("PASS second element after sort = 2")
+    }
+    // input: third element after sort; expected: 3
+    if insertion_sort([3, 1, 2])[2] != 3 {
+        print("FAIL third element after sort expected 3 got " + str_of_i64(insertion_sort([3, 1, 2])[2]))
+        failures = failures + 1
+    } else {
+        print("PASS third element after sort = 3")
+    }
+    // input: single element; expected: 1
+    if insertion_sort([1])[0] != 1 {
+        print("FAIL single element expected 1 got " + str_of_i64(insertion_sort([1])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS single element = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

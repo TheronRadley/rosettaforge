@@ -1,0 +1,57 @@
+// RosettaForge challenge specimen
+// id:        bool-001
+// title:     Majority of three booleans
+// category:  boolean_logic
+// language:  julia
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(1), space O(1): boolean majority via OR of AND pairs.
+
+// Reference snippet (julia, idiomatic):
+//   majority(a, b, c) = (a && b) || (a && c) || (b && c)
+
+// Edge variant covers all-true and single-true cases.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "majority(a, b, c) = (a && b) || (a && c) || (b && c)"
+}
+
+fn majority(a: bool, b: bool, c: bool) -> bool {
+    return (a && b) || (a && c) || (b && c)
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: two true; expected: true
+    if majority(true, true, false) != true {
+        print("FAIL two true expected true got " + str_of_bool(majority(true, true, false)))
+        failures = failures + 1
+    } else {
+        print("PASS two true = true")
+    }
+    // input: none true; expected: false
+    if majority(false, false, false) != false {
+        print("FAIL none true expected false got " + str_of_bool(majority(false, false, false)))
+        failures = failures + 1
+    } else {
+        print("PASS none true = false")
+    }
+    // input: first and third; expected: true
+    if majority(true, false, true) != true {
+        print("FAIL first and third expected true got " + str_of_bool(majority(true, false, true)))
+        failures = failures + 1
+    } else {
+        print("PASS first and third = true")
+    }
+    // input: last two; expected: true
+    if majority(false, true, true) != true {
+        print("FAIL last two expected true got " + str_of_bool(majority(false, true, true)))
+        failures = failures + 1
+    } else {
+        print("PASS last two = true")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

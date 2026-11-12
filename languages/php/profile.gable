@@ -1,0 +1,12 @@
+// RosettaForge — language profile: php
+// ================================
+// Reference-language profile for php. Documentation only: syntax,
+// idioms, type system, and limitations as implemented by php's own
+// toolchain (not by Gable). Snippets below are data, stored as Gable
+// strings; they are not executed by Gable.
+
+fn language_name() -> str { return "php" }
+
+fn profile_notes(php: str) -> str {
+    return "See challenges/php/ for specimens in php."
+}

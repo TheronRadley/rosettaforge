@@ -1,0 +1,91 @@
+// RosettaForge challenge specimen
+// id:        sort-003
+// title:     Merge Sort
+// category:  sorting
+// language:  csharp
+// variant:   edge-case
+// difficulty: medium
+// verified:  false
+// complexity: Time O(n log n), space O(n): recursive merge sort.
+
+// Edge variant covers already-sorted and duplicates cases.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "public static List<int> MergeSort(List<int> a) { if (a.Count <= 1) return a; int mid = a.Count / 2; var left = MergeSort(a.GetRange(0, mid)); var right = MergeSort(a.GetRange(mid, a.Count - mid)); return Merge(left, right); }"
+}
+
+fn merge(left: [int], right: [int]) -> [int] {
+    let result: [int] = []
+    var i = 0
+    var j = 0
+    while i < left.len {
+        if j >= right.len { list_push(result, left[i]); i = i + 1; continue }
+        if left[i] <= right[j] {
+            list_push(result, left[i])
+            i = i + 1
+        } else {
+            list_push(result, right[j])
+            j = j + 1
+        }
+    }
+    while j < right.len {
+        list_push(result, right[j])
+        j = j + 1
+    }
+    return result
+}
+
+fn merge_sort(values: [int]) -> [int] {
+    if values.len <= 1 { return values }
+    let mid = values.len / 2
+    let left: [int] = []
+    var i = 0
+    while i < mid {
+        list_push(left, values[i])
+        i = i + 1
+    }
+    let right: [int] = []
+    i = mid
+    while i < values.len {
+        list_push(right, values[i])
+        i = i + 1
+    }
+    let sorted_left = merge_sort(left)
+    let sorted_right = merge_sort(right)
+    return merge(sorted_left, sorted_right)
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: unsorted min; expected: 1
+    if merge_sort([5, 3, 8, 1, 2])[0] != 1 {
+        print("FAIL unsorted min expected 1 got " + str_of_i64(merge_sort([5, 3, 8, 1, 2])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS unsorted min = 1")
+    }
+    // input: unsorted max; expected: 8
+    if merge_sort([5, 3, 8, 1, 2])[4] != 8 {
+        print("FAIL unsorted max expected 8 got " + str_of_i64(merge_sort([5, 3, 8, 1, 2])[4]))
+        failures = failures + 1
+    } else {
+        print("PASS unsorted max = 8")
+    }
+    // input: already sorted; expected: 2
+    if merge_sort([1, 2, 3])[1] != 2 {
+        print("FAIL already sorted expected 2 got " + str_of_i64(merge_sort([1, 2, 3])[1]))
+        failures = failures + 1
+    } else {
+        print("PASS already sorted = 2")
+    }
+    // input: duplicates; expected: 1
+    if merge_sort([2, 2, 1])[0] != 1 {
+        print("FAIL duplicates expected 1 got " + str_of_i64(merge_sort([2, 2, 1])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS duplicates = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

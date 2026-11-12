@@ -1,0 +1,91 @@
+// RosettaForge challenge specimen
+// id:        sort-003
+// title:     Merge Sort
+// category:  sorting
+// language:  scala
+// variant:   idiomatic
+// difficulty: medium
+// verified:  false
+// complexity: Time O(n log n), space O(n): recursive merge sort.
+
+// Edge variant covers already-sorted and duplicates cases.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "def mergeSort(a: List[Int]): List[Int] = { if (a.length <= 1) a else { val mid = a.length / 2; merge(mergeSort(a.take(mid)), mergeSort(a.drop(mid))) } }\\ndef merge(left: List[Int], right: List[Int]): List[Int] = (left, right) match { case (Nil, r) => r; case (l, Nil) => l; case (lh :: lt, rh :: rt) => if (lh <= rh) lh :: merge(lt, right) else rh :: merge(left, rt) }"
+}
+
+fn merge(left: [int], right: [int]) -> [int] {
+    let result: [int] = []
+    var i = 0
+    var j = 0
+    while i < left.len {
+        if j >= right.len { list_push(result, left[i]); i = i + 1; continue }
+        if left[i] <= right[j] {
+            list_push(result, left[i])
+            i = i + 1
+        } else {
+            list_push(result, right[j])
+            j = j + 1
+        }
+    }
+    while j < right.len {
+        list_push(result, right[j])
+        j = j + 1
+    }
+    return result
+}
+
+fn merge_sort(values: [int]) -> [int] {
+    if values.len <= 1 { return values }
+    let mid = values.len / 2
+    let left: [int] = []
+    var i = 0
+    while i < mid {
+        list_push(left, values[i])
+        i = i + 1
+    }
+    let right: [int] = []
+    i = mid
+    while i < values.len {
+        list_push(right, values[i])
+        i = i + 1
+    }
+    let sorted_left = merge_sort(left)
+    let sorted_right = merge_sort(right)
+    return merge(sorted_left, sorted_right)
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: first after sort; expected: 1
+    if merge_sort([3, 1, 2])[0] != 1 {
+        print("FAIL first after sort expected 1 got " + str_of_i64(merge_sort([3, 1, 2])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS first after sort = 1")
+    }
+    // input: second after sort; expected: 2
+    if merge_sort([3, 1, 2])[1] != 2 {
+        print("FAIL second after sort expected 2 got " + str_of_i64(merge_sort([3, 1, 2])[1]))
+        failures = failures + 1
+    } else {
+        print("PASS second after sort = 2")
+    }
+    // input: third after sort; expected: 3
+    if merge_sort([3, 1, 2])[2] != 3 {
+        print("FAIL third after sort expected 3 got " + str_of_i64(merge_sort([3, 1, 2])[2]))
+        failures = failures + 1
+    } else {
+        print("PASS third after sort = 3")
+    }
+    // input: single element; expected: 1
+    if merge_sort([1])[0] != 1 {
+        print("FAIL single element expected 1 got " + str_of_i64(merge_sort([1])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS single element = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

@@ -1,0 +1,59 @@
+// RosettaForge challenge specimen
+// id:        seq-002
+// title:     Linear Search
+// category:  sequences
+// language:  php
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(1): single pass scan.
+
+// Edge variant covers empty list and single-element edge cases.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "function linear_search(array \$values, int \$target): int { if (count(\$values) === 0) return -1; foreach (\$values as \$i => \$v) { if (\$v === \$target) return (int)\$i; }; return -1; }"
+}
+
+fn linear_search(values: [int], target: int) -> int {
+    var i = 0
+    while i < values.len {
+        if values[i] == target { return i }
+        i = i + 1
+    }
+    return -1
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: not found; expected: -1
+    if linear_search([1, 2, 3], 4) != -1 {
+        print("FAIL not found expected -1 got " + str_of_i64(linear_search([1, 2, 3], 4)))
+        failures = failures + 1
+    } else {
+        print("PASS not found = -1")
+    }
+    // input: empty list; expected: -1
+    if linear_search([], 1) != -1 {
+        print("FAIL empty list expected -1 got " + str_of_i64(linear_search([], 1)))
+        failures = failures + 1
+    } else {
+        print("PASS empty list = -1")
+    }
+    // input: single element match; expected: 0
+    if linear_search([5], 5) != 0 {
+        print("FAIL single element match expected 0 got " + str_of_i64(linear_search([5], 5)))
+        failures = failures + 1
+    } else {
+        print("PASS single element match = 0")
+    }
+    // input: single element no match; expected: -1
+    if linear_search([5], 3) != -1 {
+        print("FAIL single element no match expected -1 got " + str_of_i64(linear_search([5], 3)))
+        failures = failures + 1
+    } else {
+        print("PASS single element no match = -1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

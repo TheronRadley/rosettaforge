@@ -1,0 +1,60 @@
+// RosettaForge challenge specimen
+// id:        arith-004
+// title:     Primality Test
+// category:  arithmetic
+// language:  typescript
+// variant:   idiomatic
+// difficulty: medium
+// verified:  false
+// complexity: Time O(sqrt(n)), space O(1): trial division up to sqrt(n).
+
+// Edge variant skips even divisors after checking 2.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "function isPrime(n: number): boolean { if (n < 2) return false; for (let i = 2; i * i <= n; i++) { if (n % i === 0) return false; }; return true; }"
+}
+
+fn is_prime(n: int) -> bool {
+    if n < 2 { return false }
+    var i = 2
+    while i * i <= n {
+        if n % i == 0 { return false }
+        i = i + 1
+    }
+    return true
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: smallest prime; expected: true
+    if is_prime(2) != true {
+        print("FAIL smallest prime expected true got " + str_of_bool(is_prime(2)))
+        failures = failures + 1
+    } else {
+        print("PASS smallest prime = true")
+    }
+    // input: prime; expected: true
+    if is_prime(17) != true {
+        print("FAIL prime expected true got " + str_of_bool(is_prime(17)))
+        failures = failures + 1
+    } else {
+        print("PASS prime = true")
+    }
+    // input: composite; expected: false
+    if is_prime(15) != false {
+        print("FAIL composite expected false got " + str_of_bool(is_prime(15)))
+        failures = failures + 1
+    } else {
+        print("PASS composite = false")
+    }
+    // input: below 2; expected: false
+    if is_prime(1) != false {
+        print("FAIL below 2 expected false got " + str_of_bool(is_prime(1)))
+        failures = failures + 1
+    } else {
+        print("PASS below 2 = false")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

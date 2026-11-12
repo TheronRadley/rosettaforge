@@ -1,0 +1,343 @@
+// RosettaForge core — command-line interface
+// ==========================================
+//
+// Entry point of the RosettaForge CLI. Imports only catalog helpers and
+// index shards (metadata) — never challenge specimens, so the import graph
+// stays far below the compiler limits (512 files, depth 64).
+//
+// Gable cannot spawn child processes, so check/run commands print the exact
+// command to execute; copy and run it directly.
+//
+// Usage:
+//   gable run core/main.gable                 show this help
+//   gable run core/main.gable -- catalog      list all specimens
+//   gable run core/main.gable -- search <kw>  search specimens by keyword
+//   gable run core/main.gable -- category <cat>  filter specimens by category
+//   gable run core/main.gable -- language <lang>  filter specimens by language
+//   gable run core/main.gable -- difficulty <d>  filter specimens by difficulty
+//   gable run core/main.gable -- view <id>    show specimen metadata
+//   gable run core/main.gable -- check <id>   print the `gable check` command
+//   gable run core/main.gable -- run <id>     print the `gable run` command
+//   gable run core/main.gable -- stats        catalog statistics
+// Program arguments follow `--` and are read with arg_count()/arg(i).
+
+import "../core/catalog.gable"
+import "../index/catalog_000.gable"
+import "../index/catalog_001.gable"
+import "../index/catalog_002.gable"
+import "../index/catalog_003.gable"
+import "../index/catalog_004.gable"
+import "../index/catalog_005.gable"
+import "../index/catalog_006.gable"
+import "../index/catalog_007.gable"
+// Each index shard exposes its entries through a uniquely-named function
+// (catalog_000_entries, catalog_001_entries, ...). Gable resolves functions
+// program-wide across imported files, so no forward declaration is needed.
+
+fn print_help() {
+    print("RosettaForge CLI — usage:")
+    print("  gable run core/main.gable                 show this help")
+    print("  gable run core/main.gable -- catalog      list all specimens")
+    print("  gable run core/main.gable -- search <kw>  search specimens by keyword")
+    print("  gable run core/main.gable -- category <cat>  filter specimens by category")
+    print("  gable run core/main.gable -- language <lang>  filter specimens by language")
+    print("  gable run core/main.gable -- difficulty <d>  filter specimens by difficulty")
+    print("  gable run core/main.gable -- view <id>        show specimen metadata")
+    print("  gable run core/main.gable -- check <id>   print the `gable check` command")
+    print("  gable run core/main.gable -- run <id>     print the `gable run` command")
+    print("  gable run core/main.gable -- stats        catalog statistics")
+}
+
+fn arg_or_empty(index: int) -> str {
+    if arg_count() > index {
+        return arg(index)
+    }
+    return ""
+}
+
+fn list_catalog() -> int {
+    var total = 0
+    for e in catalog_000() {
+        print_entry(e)
+        total = total + 1
+    }
+    for e in catalog_001() {
+        print_entry(e)
+        total = total + 1
+    }
+    for e in catalog_002() {
+        print_entry(e)
+        total = total + 1
+    }
+    for e in catalog_003() {
+        print_entry(e)
+        total = total + 1
+    }
+    for e in catalog_004() {
+        print_entry(e)
+        total = total + 1
+    }
+    for e in catalog_005() {
+        print_entry(e)
+        total = total + 1
+    }
+    for e in catalog_006() {
+        print_entry(e)
+        total = total + 1
+    }
+    for e in catalog_007() {
+        print_entry(e)
+        total = total + 1
+    }
+    print("---")
+    print("total specimens: " + str_of_i64(total))
+    return 0
+}
+
+fn search_catalog(keyword: str) -> int {
+    var total = 0
+    total = total + print_matches(catalog_000(), keyword)
+    total = total + print_matches(catalog_001(), keyword)
+    total = total + print_matches(catalog_002(), keyword)
+    total = total + print_matches(catalog_003(), keyword)
+    total = total + print_matches(catalog_004(), keyword)
+    total = total + print_matches(catalog_005(), keyword)
+    total = total + print_matches(catalog_006(), keyword)
+    total = total + print_matches(catalog_007(), keyword)
+    print("---")
+    print("matches: " + str_of_i64(total))
+    return 0
+}
+
+fn filter_category(cat: str) -> int {
+    var total = 0
+    total = total + print_category(catalog_000(), cat)
+    total = total + print_category(catalog_001(), cat)
+    total = total + print_category(catalog_002(), cat)
+    total = total + print_category(catalog_003(), cat)
+    total = total + print_category(catalog_004(), cat)
+    total = total + print_category(catalog_005(), cat)
+    total = total + print_category(catalog_006(), cat)
+    total = total + print_category(catalog_007(), cat)
+    print("---")
+    print("matches: " + str_of_i64(total))
+    return 0
+}
+
+fn filter_language(lang: str) -> int {
+    var total = 0
+    total = total + print_language(catalog_000(), lang)
+    total = total + print_language(catalog_001(), lang)
+    total = total + print_language(catalog_002(), lang)
+    total = total + print_language(catalog_003(), lang)
+    total = total + print_language(catalog_004(), lang)
+    total = total + print_language(catalog_005(), lang)
+    total = total + print_language(catalog_006(), lang)
+    total = total + print_language(catalog_007(), lang)
+    print("---")
+    print("matches: " + str_of_i64(total))
+    return 0
+}
+
+fn filter_difficulty(dif: str) -> int {
+    var total = 0
+    total = total + print_difficulty(catalog_000(), dif)
+    total = total + print_difficulty(catalog_001(), dif)
+    total = total + print_difficulty(catalog_002(), dif)
+    total = total + print_difficulty(catalog_003(), dif)
+    total = total + print_difficulty(catalog_004(), dif)
+    total = total + print_difficulty(catalog_005(), dif)
+    total = total + print_difficulty(catalog_006(), dif)
+    total = total + print_difficulty(catalog_007(), dif)
+    print("---")
+    print("matches: " + str_of_i64(total))
+    return 0
+}
+
+fn view_specimen(id: str) -> int {
+    let hit_catalog000 = find_entry(catalog_000(), id)
+    if hit_catalog000.ok {
+        print_entry_full(hit_catalog000.entry)
+        return 0
+    }
+    let hit_catalog001 = find_entry(catalog_001(), id)
+    if hit_catalog001.ok {
+        print_entry_full(hit_catalog001.entry)
+        return 0
+    }
+    let hit_catalog002 = find_entry(catalog_002(), id)
+    if hit_catalog002.ok {
+        print_entry_full(hit_catalog002.entry)
+        return 0
+    }
+    let hit_catalog003 = find_entry(catalog_003(), id)
+    if hit_catalog003.ok {
+        print_entry_full(hit_catalog003.entry)
+        return 0
+    }
+    let hit_catalog004 = find_entry(catalog_004(), id)
+    if hit_catalog004.ok {
+        print_entry_full(hit_catalog004.entry)
+        return 0
+    }
+    let hit_catalog005 = find_entry(catalog_005(), id)
+    if hit_catalog005.ok {
+        print_entry_full(hit_catalog005.entry)
+        return 0
+    }
+    let hit_catalog006 = find_entry(catalog_006(), id)
+    if hit_catalog006.ok {
+        print_entry_full(hit_catalog006.entry)
+        return 0
+    }
+    let hit_catalog007 = find_entry(catalog_007(), id)
+    if hit_catalog007.ok {
+        print_entry_full(hit_catalog007.entry)
+        return 0
+    }
+    print("specimen not found: " + id)
+    return 1
+}
+
+fn check_command(id: str) -> int {
+    let hit_catalog000 = find_entry(catalog_000(), id)
+    if hit_catalog000.ok {
+        print("gable check " + hit_catalog000.entry.path)
+        return 0
+    }
+    let hit_catalog001 = find_entry(catalog_001(), id)
+    if hit_catalog001.ok {
+        print("gable check " + hit_catalog001.entry.path)
+        return 0
+    }
+    let hit_catalog002 = find_entry(catalog_002(), id)
+    if hit_catalog002.ok {
+        print("gable check " + hit_catalog002.entry.path)
+        return 0
+    }
+    let hit_catalog003 = find_entry(catalog_003(), id)
+    if hit_catalog003.ok {
+        print("gable check " + hit_catalog003.entry.path)
+        return 0
+    }
+    let hit_catalog004 = find_entry(catalog_004(), id)
+    if hit_catalog004.ok {
+        print("gable check " + hit_catalog004.entry.path)
+        return 0
+    }
+    let hit_catalog005 = find_entry(catalog_005(), id)
+    if hit_catalog005.ok {
+        print("gable check " + hit_catalog005.entry.path)
+        return 0
+    }
+    let hit_catalog006 = find_entry(catalog_006(), id)
+    if hit_catalog006.ok {
+        print("gable check " + hit_catalog006.entry.path)
+        return 0
+    }
+    let hit_catalog007 = find_entry(catalog_007(), id)
+    if hit_catalog007.ok {
+        print("gable check " + hit_catalog007.entry.path)
+        return 0
+    }
+    print("specimen not found: " + id)
+    return 1
+}
+
+fn run_command(id: str) -> int {
+    let hit_catalog000 = find_entry(catalog_000(), id)
+    if hit_catalog000.ok {
+        print("gable run " + hit_catalog000.entry.path)
+        return 0
+    }
+    let hit_catalog001 = find_entry(catalog_001(), id)
+    if hit_catalog001.ok {
+        print("gable run " + hit_catalog001.entry.path)
+        return 0
+    }
+    let hit_catalog002 = find_entry(catalog_002(), id)
+    if hit_catalog002.ok {
+        print("gable run " + hit_catalog002.entry.path)
+        return 0
+    }
+    let hit_catalog003 = find_entry(catalog_003(), id)
+    if hit_catalog003.ok {
+        print("gable run " + hit_catalog003.entry.path)
+        return 0
+    }
+    let hit_catalog004 = find_entry(catalog_004(), id)
+    if hit_catalog004.ok {
+        print("gable run " + hit_catalog004.entry.path)
+        return 0
+    }
+    let hit_catalog005 = find_entry(catalog_005(), id)
+    if hit_catalog005.ok {
+        print("gable run " + hit_catalog005.entry.path)
+        return 0
+    }
+    let hit_catalog006 = find_entry(catalog_006(), id)
+    if hit_catalog006.ok {
+        print("gable run " + hit_catalog006.entry.path)
+        return 0
+    }
+    let hit_catalog007 = find_entry(catalog_007(), id)
+    if hit_catalog007.ok {
+        print("gable run " + hit_catalog007.entry.path)
+        return 0
+    }
+    print("specimen not found: " + id)
+    return 1
+}
+
+fn show_stats() -> int {
+    var total = 0
+    total = total + count_all(catalog_000())
+    total = total + count_all(catalog_001())
+    total = total + count_all(catalog_002())
+    total = total + count_all(catalog_003())
+    total = total + count_all(catalog_004())
+    total = total + count_all(catalog_005())
+    total = total + count_all(catalog_006())
+    total = total + count_all(catalog_007())
+    print("specimens indexed: " + str_of_i64(total))
+    print("index shards: 8")
+    return 0
+}
+
+fn main() -> int {
+    let cmd = arg_or_empty(1)
+    if cmd == "" {
+        print_help()
+        return 0
+    }
+    if cmd == "catalog" {
+        return list_catalog()
+    }
+    if cmd == "search" {
+        return search_catalog(arg_or_empty(2))
+    }
+    if cmd == "category" {
+        return filter_category(arg_or_empty(2))
+    }
+    if cmd == "language" {
+        return filter_language(arg_or_empty(2))
+    }
+    if cmd == "difficulty" {
+        return filter_difficulty(arg_or_empty(2))
+    }
+    if cmd == "view" {
+        return view_specimen(arg_or_empty(2))
+    }
+    if cmd == "check" {
+        return check_command(arg_or_empty(2))
+    }
+    if cmd == "run" {
+        return run_command(arg_or_empty(2))
+    }
+    if cmd == "stats" {
+        return show_stats()
+    }
+    print("unknown command: " + cmd)
+    print_help()
+    return 1
+}

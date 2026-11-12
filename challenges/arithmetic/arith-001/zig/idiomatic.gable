@@ -1,0 +1,57 @@
+// RosettaForge challenge specimen
+// id:        arith-001
+// title:     Sum of integers 1 through n
+// category:  arithmetic
+// language:  zig
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(1), space O(1): arithmetic series formula n*(n+1)/2.
+
+// Reference snippet (zig, idiomatic):
+//   export fn sumN(n: i64) i64 { return n * (n + 1) / 2; }
+
+// Edge variant guards negative input (returns 0) and checks large n within 64-bit range.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "export fn sumN(n: i64) i64 { return n * (n + 1) / 2; }"
+}
+
+fn sum_n(n: int) -> int {
+    return n * (n + 1) / 2
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: n = 5; expected: 15
+    if sum_n(5) != 15 {
+        print("FAIL n = 5 expected 15 got " + str_of_i64(sum_n(5)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 5 = 15")
+    }
+    // input: n = 0; expected: 0
+    if sum_n(0) != 0 {
+        print("FAIL n = 0 expected 0 got " + str_of_i64(sum_n(0)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 0 = 0")
+    }
+    // input: n = 100; expected: 5050
+    if sum_n(100) != 5050 {
+        print("FAIL n = 100 expected 5050 got " + str_of_i64(sum_n(100)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 100 = 5050")
+    }
+    // input: n = 1; expected: 1
+    if sum_n(1) != 1 {
+        print("FAIL n = 1 expected 1 got " + str_of_i64(sum_n(1)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 1 = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

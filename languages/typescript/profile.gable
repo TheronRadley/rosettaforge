@@ -1,0 +1,12 @@
+// RosettaForge — language profile: typescript
+// ================================
+// Reference-language profile for typescript. Documentation only: syntax,
+// idioms, type system, and limitations as implemented by typescript's own
+// toolchain (not by Gable). Snippets below are data, stored as Gable
+// strings; they are not executed by Gable.
+
+fn language_name() -> str { return "typescript" }
+
+fn profile_notes(typescript: str) -> str {
+    return "See challenges/typescript/ for specimens in typescript."
+}

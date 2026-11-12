@@ -1,0 +1,48 @@
+// RosettaForge challenge specimen
+// id:        rec-001
+// title:     Factorial Recursive
+// category:  recursion
+// language:  cpp
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(n): recursive factorial with base case n <= 1.
+
+// Edge variant tests larger factorial values that still fit i64.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "long long factorial(int n) { return n <= 1 ? 1 : (long long)n * factorial(n - 1); }"
+}
+
+fn factorial(n: int) -> int {
+    if n <= 1 { return 1 }
+    return n * factorial(n - 1)
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: zero; expected: 1
+    if factorial(0) != 1 {
+        print("FAIL zero expected 1 got " + str_of_i64(factorial(0)))
+        failures = failures + 1
+    } else {
+        print("PASS zero = 1")
+    }
+    // input: 12 factorial; expected: 479001600
+    if factorial(12) != 479001600 {
+        print("FAIL 12 factorial expected 479001600 got " + str_of_i64(factorial(12)))
+        failures = failures + 1
+    } else {
+        print("PASS 12 factorial = 479001600")
+    }
+    // input: 20 factorial fits i64; expected: 2432902008176640000
+    if factorial(20) != 2432902008176640000 {
+        print("FAIL 20 factorial fits i64 expected 2432902008176640000 got " + str_of_i64(factorial(20)))
+        failures = failures + 1
+    } else {
+        print("PASS 20 factorial fits i64 = 2432902008176640000")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

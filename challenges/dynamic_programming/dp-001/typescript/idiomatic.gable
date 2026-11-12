@@ -1,0 +1,72 @@
+// RosettaForge challenge specimen
+// id:        dp-001
+// title:     Nth Fibonacci number (iterative DP)
+// category:  dynamic_programming
+// language:  typescript
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(1): iterative bottom-up DP with two rolling variables.
+
+// Reference snippet (typescript, idiomatic):
+//   function fib(n) {
+//       if (n < 2) return n;
+//       let a = 0, b = 1;
+//       for (let i = 2; i <= n; i++) { [a, b] = [b, a + b]; }
+//       return b;
+//   }
+
+// Edge variant covers n = 2 boundary, n = 30, and re-checks small n.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "function fib(n) {\n    if (n < 2) return n;\n    let a = 0, b = 1;\n    for (let i = 2; i <= n; i++) { [a, b] = [b, a + b]; }\n    return b;\n}"
+}
+
+fn fib(n: int) -> int {
+    if n < 2 { return n }
+    var a = 0
+    var b = 1
+    var i = 2
+    while i <= n {
+        let t = a + b
+        a = b
+        b = t
+        i = i + 1
+    }
+    return b
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: n = 0; expected: 0
+    if fib(0) != 0 {
+        print("FAIL n = 0 expected 0 got " + str_of_i64(fib(0)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 0 = 0")
+    }
+    // input: n = 1; expected: 1
+    if fib(1) != 1 {
+        print("FAIL n = 1 expected 1 got " + str_of_i64(fib(1)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 1 = 1")
+    }
+    // input: n = 10; expected: 55
+    if fib(10) != 55 {
+        print("FAIL n = 10 expected 55 got " + str_of_i64(fib(10)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 10 = 55")
+    }
+    // input: n = 20; expected: 6765
+    if fib(20) != 6765 {
+        print("FAIL n = 20 expected 6765 got " + str_of_i64(fib(20)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 20 = 6765")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

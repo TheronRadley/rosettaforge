@@ -1,0 +1,61 @@
+// RosettaForge challenge specimen
+// id:        seq-003
+// title:     Binary Search
+// category:  sequences
+// language:  dart
+// variant:   idiomatic
+// difficulty: medium
+// verified:  false
+// complexity: Time O(log n), space O(1): binary search on sorted list.
+
+// Edge variant covers empty list and single-element edge cases.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "int binarySearch(List<int> values, int target) { var lo = 0; var hi = values.length - 1; while (lo <= hi) { var mid = (lo + hi) ~/ 2; if (values[mid] == target) return mid; if (values[mid] < target) lo = mid + 1; else hi = mid - 1; }; return -1; }"
+}
+
+fn binary_search(values: [int], target: int) -> int {
+    var lo = 0
+    var hi = values.len - 1
+    while lo <= hi {
+        let mid = (lo + hi) / 2
+        if values[mid] == target { return mid }
+        if values[mid] < target { lo = mid + 1 } else { hi = mid - 1 }
+    }
+    return -1
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: middle element; expected: 2
+    if binary_search([1, 2, 3, 4, 5], 3) != 2 {
+        print("FAIL middle element expected 2 got " + str_of_i64(binary_search([1, 2, 3, 4, 5], 3)))
+        failures = failures + 1
+    } else {
+        print("PASS middle element = 2")
+    }
+    // input: first element; expected: 0
+    if binary_search([1, 2, 3], 1) != 0 {
+        print("FAIL first element expected 0 got " + str_of_i64(binary_search([1, 2, 3], 1)))
+        failures = failures + 1
+    } else {
+        print("PASS first element = 0")
+    }
+    // input: last element; expected: 2
+    if binary_search([1, 2, 3], 3) != 2 {
+        print("FAIL last element expected 2 got " + str_of_i64(binary_search([1, 2, 3], 3)))
+        failures = failures + 1
+    } else {
+        print("PASS last element = 2")
+    }
+    // input: second element; expected: 1
+    if binary_search([10, 20, 30, 40], 20) != 1 {
+        print("FAIL second element expected 1 got " + str_of_i64(binary_search([10, 20, 30, 40], 20)))
+        failures = failures + 1
+    } else {
+        print("PASS second element = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

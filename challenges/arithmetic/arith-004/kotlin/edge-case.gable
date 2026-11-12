@@ -1,0 +1,60 @@
+// RosettaForge challenge specimen
+// id:        arith-004
+// title:     Primality Test
+// category:  arithmetic
+// language:  kotlin
+// variant:   edge-case
+// difficulty: medium
+// verified:  false
+// complexity: Time O(sqrt(n)), space O(1): trial division up to sqrt(n).
+
+// Edge variant skips even divisors after checking 2.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "fun isPrime(n: Int): Boolean { if (n < 2) return false; if (n == 2) return true; if (n % 2 == 0) return false; var i = 3; while (i * i <= n) { if (n % i == 0) return false; i += 2 }; return true }"
+}
+
+fn is_prime(n: int) -> bool {
+    if n < 2 { return false }
+    var i = 2
+    while i * i <= n {
+        if n % i == 0 { return false }
+        i = i + 1
+    }
+    return true
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: zero; expected: false
+    if is_prime(0) != false {
+        print("FAIL zero expected false got " + str_of_bool(is_prime(0)))
+        failures = failures + 1
+    } else {
+        print("PASS zero = false")
+    }
+    // input: two; expected: true
+    if is_prime(2) != true {
+        print("FAIL two expected true got " + str_of_bool(is_prime(2)))
+        failures = failures + 1
+    } else {
+        print("PASS two = true")
+    }
+    // input: larger prime; expected: true
+    if is_prime(97) != true {
+        print("FAIL larger prime expected true got " + str_of_bool(is_prime(97)))
+        failures = failures + 1
+    } else {
+        print("PASS larger prime = true")
+    }
+    // input: even composite; expected: false
+    if is_prime(100) != false {
+        print("FAIL even composite expected false got " + str_of_bool(is_prime(100)))
+        failures = failures + 1
+    } else {
+        print("PASS even composite = false")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

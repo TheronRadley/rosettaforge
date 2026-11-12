@@ -1,0 +1,66 @@
+// RosettaForge challenge specimen
+// id:        comb-002
+// title:     Catalan Numbers
+// category:  combinatorics
+// language:  go
+// variant:   idiomatic
+// difficulty: medium
+// verified:  false
+// complexity: Time O(n^2), space O(n): DP recurrence C(n) = sum C(j)*C(n-1-j).
+
+// Edge variant adds explicit C(0)=1 guard (same DP, clearer base case).
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "func catalan(n int) int64 { c := []int64{1}; for i := 1; i <= n; i++ { c = append(c, 0); for j := 0; j < i; j++ { c[i] += c[j] * c[i - 1 - j] }; }; return c[n] }"
+}
+
+fn catalan(n: int) -> int {
+    let c: [int] = [1]
+    var i = 1
+    while i <= n {
+        list_push(c, 0)
+        var j = 0
+        while j < i {
+            let v = c[i] + c[j] * c[i - 1 - j]
+            c[i] = v
+            j = j + 1
+        }
+        i = i + 1
+    }
+    return c[n]
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: C(0); expected: 1
+    if catalan(0) != 1 {
+        print("FAIL C(0) expected 1 got " + str_of_i64(catalan(0)))
+        failures = failures + 1
+    } else {
+        print("PASS C(0) = 1")
+    }
+    // input: C(1); expected: 1
+    if catalan(1) != 1 {
+        print("FAIL C(1) expected 1 got " + str_of_i64(catalan(1)))
+        failures = failures + 1
+    } else {
+        print("PASS C(1) = 1")
+    }
+    // input: C(2); expected: 2
+    if catalan(2) != 2 {
+        print("FAIL C(2) expected 2 got " + str_of_i64(catalan(2)))
+        failures = failures + 1
+    } else {
+        print("PASS C(2) = 2")
+    }
+    // input: C(3); expected: 5
+    if catalan(3) != 5 {
+        print("FAIL C(3) expected 5 got " + str_of_i64(catalan(3)))
+        failures = failures + 1
+    } else {
+        print("PASS C(3) = 5")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

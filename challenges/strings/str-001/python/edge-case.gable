@@ -1,0 +1,64 @@
+// RosettaForge challenge specimen
+// id:        str-001
+// title:     Count words in a text
+// category:  strings
+// language:  python
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(n): split on single spaces, count non-empty pieces.
+
+// Reference snippet (python, edge-case):
+//   def word_count(text):
+//       count = 0
+//       in_word = False
+//       for ch in text:
+//           if ch.isspace():
+//               in_word = False
+//           elif not in_word:
+//               in_word = True
+//               count += 1
+//       return count
+
+// Edge variant covers spaces-only input, no separators, and leading/trailing spaces (empty pieces are skipped).
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "def word_count(text):\n    count = 0\n    in_word = False\n    for ch in text:\n        if ch.isspace():\n            in_word = False\n        elif not in_word:\n            in_word = True\n            count += 1\n    return count"
+}
+
+fn word_count(text: str) -> int {
+    let parts = text.split(" ")
+    var n = 0
+    for p in parts {
+        if p != "" { n = n + 1 }
+    }
+    return n
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: spaces only; expected: 0
+    if word_count("   ") != 0 {
+        print("FAIL spaces only expected 0 got " + str_of_i64(word_count("   ")))
+        failures = failures + 1
+    } else {
+        print("PASS spaces only = 0")
+    }
+    // input: no separator; expected: 1
+    if word_count("hello") != 1 {
+        print("FAIL no separator expected 1 got " + str_of_i64(word_count("hello")))
+        failures = failures + 1
+    } else {
+        print("PASS no separator = 1")
+    }
+    // input: leading and trailing spaces; expected: 2
+    if word_count(" leading trailing ") != 2 {
+        print("FAIL leading and trailing spaces expected 2 got " + str_of_i64(word_count(" leading trailing ")))
+        failures = failures + 1
+    } else {
+        print("PASS leading and trailing spaces = 2")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

@@ -1,0 +1,88 @@
+// RosettaForge — Getting Started
+// ===============================
+//
+// RosettaForge is a polyglot programming laboratory built exclusively in Gable.
+// It contains thousands of executable challenge specimens across 20 reference
+// programming languages, plus a Gable command-line interface for browsing,
+// searching, and running them.
+//
+// Repository layout (all files end in .gable):
+//
+//   START.gable        this file
+//   LICENSE.gable      project license (MIT)
+//   ARCHITECTURE.gable system architecture and compilation boundaries
+//   CONTRIBUTING.gable development rules and generation pipeline
+//   GABLE_COMPATIBILITY.gable verified Gable compiler capabilities and limits
+//   PROGRESS.gable     project state, checkpoint and resume instructions
+//
+//   core/              CLI, catalog, search, filters, viewer, scoring, validation
+//   library/           reusable Gable primitives (arithmetic, sequences, ...)
+//   languages/         reference-language profiles and syntax examples
+//   challenges/        10,000+ challenge specimens (category/id/lang/variant)
+//   index/             bounded catalog index shards (metadata only)
+//   verification/      test drivers and verification results
+//   benchmarks/        compile/run benchmarks
+//   documentation/     additional guides
+//   experiments/       language-semantic experiments
+//
+// Prerequisites
+// -------------
+//
+// Build the upstream Gable compiler (commit 58405ffd9a6e9201ae7e355faf8e6002de721034):
+//
+//   git clone --depth 1 https://github.com/gablelang/gable.git /tmp/gable-upstream
+//   cd /tmp/gable-upstream
+//   cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug
+//   cmake --build build
+//
+// The `gable` binary is at /tmp/gable-upstream/build/debug/gable. Add it to PATH
+// or invoke it by absolute path. A C compiler (cc) is required by the C backend.
+//
+// Using the CLI
+// -------------
+//
+//   /tmp/gable-upstream/build/debug/gable run core/main.gable
+//       Show help and example commands.
+//
+//   /tmp/gable-upstream/build/debug/gable run core/main.gable catalog
+//       List every indexed challenge specimen.
+//
+//   /tmp/gable-upstream/build/debug/gable run core/main.gable search primes
+//       Search catalog entries by keyword.
+//
+//   /tmp/gable-upstream/build/debug/gable run core/main.gable view arith-001
+//       Show metadata for one specimen.
+//
+//   /tmp/gable-upstream/build/debug/gable run core/main.gable check arith-001
+//       Print the exact `gable check` command for a specimen.
+//
+//   /tmp/gable-upstream/build/debug/gable run core/main.gable run arith-001
+//       Print the exact `gable run` command for a specimen.
+//
+// Gable cannot spawn child processes, so the CLI prints the exact command to run
+// each specimen rather than executing it on your behalf. Copy the printed
+// command and run it directly.
+//
+// Running a challenge specimen directly
+// -------------------------------------
+//
+// Every challenge specimen is an independent program with its own `main`:
+//
+//   /tmp/gable-upstream/build/debug/gable run challenges/arithmetic/arith-001/python/idiomatic.gable
+//   /tmp/gable-upstream/build/debug/gable check challenges/arithmetic/arith-001/python/idiomatic.gable
+//
+// Verification
+// ------------
+//
+//   PROGRESS.gable records completed batches, counts and resume commands.
+//   Verification results live in verification/.
+//
+// .gable-only rule
+// ----------------
+//
+// Every tracked file ends in .gable, including docs and license (stored as
+// comments). This means GitHub does not render a conventional README or
+// license file — START.gable is the entry point instead.
+//
+// Other languages appear only as escaped reference snippets inside Gable
+// strings or comments; they are data, not executable Gable code.

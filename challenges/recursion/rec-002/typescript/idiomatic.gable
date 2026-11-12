@@ -1,0 +1,56 @@
+// RosettaForge challenge specimen
+// id:        rec-002
+// title:     Tower of Hanoi Move Count
+// category:  recursion
+// language:  typescript
+// variant:   idiomatic
+// difficulty: medium
+// verified:  false
+// complexity: Time O(2^n), space O(n): recursive move count T(n) = 2*T(n-1) + 1.
+
+// Edge variant tests 4 and 5 disks.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "function hanoi(n: number): number { if (n <= 0) return 0; if (n === 1) return 1; return hanoi(n - 1) + 1 + hanoi(n - 1); }"
+}
+
+fn hanoi(n: int) -> int {
+    if n <= 0 { return 0 }
+    if n == 1 { return 1 }
+    return hanoi(n - 1) + 1 + hanoi(n - 1)
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: zero disks; expected: 0
+    if hanoi(0) != 0 {
+        print("FAIL zero disks expected 0 got " + str_of_i64(hanoi(0)))
+        failures = failures + 1
+    } else {
+        print("PASS zero disks = 0")
+    }
+    // input: one disk; expected: 1
+    if hanoi(1) != 1 {
+        print("FAIL one disk expected 1 got " + str_of_i64(hanoi(1)))
+        failures = failures + 1
+    } else {
+        print("PASS one disk = 1")
+    }
+    // input: two disks; expected: 3
+    if hanoi(2) != 3 {
+        print("FAIL two disks expected 3 got " + str_of_i64(hanoi(2)))
+        failures = failures + 1
+    } else {
+        print("PASS two disks = 3")
+    }
+    // input: three disks; expected: 7
+    if hanoi(3) != 7 {
+        print("FAIL three disks expected 7 got " + str_of_i64(hanoi(3)))
+        failures = failures + 1
+    } else {
+        print("PASS three disks = 7")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

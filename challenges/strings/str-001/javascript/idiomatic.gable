@@ -1,0 +1,64 @@
+// RosettaForge challenge specimen
+// id:        str-001
+// title:     Count words in a text
+// category:  strings
+// language:  javascript
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(n): split on single spaces, count non-empty pieces.
+
+// Reference snippet (javascript, idiomatic):
+//   function wordCount(text) {
+//       return text.trim().split(/\s+/).filter(Boolean).length;
+//   }
+
+// Edge variant covers spaces-only input, no separators, and leading/trailing spaces (empty pieces are skipped).
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "function wordCount(text) {\n    return text.trim().split(/\\s+/).filter(Boolean).length;\n}"
+}
+
+fn word_count(text: str) -> int {
+    let parts = text.split(" ")
+    var n = 0
+    for p in parts {
+        if p != "" { n = n + 1 }
+    }
+    return n
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: two words; expected: 2
+    if word_count("hello world") != 2 {
+        print("FAIL two words expected 2 got " + str_of_i64(word_count("hello world")))
+        failures = failures + 1
+    } else {
+        print("PASS two words = 2")
+    }
+    // input: single word; expected: 1
+    if word_count("one") != 1 {
+        print("FAIL single word expected 1 got " + str_of_i64(word_count("one")))
+        failures = failures + 1
+    } else {
+        print("PASS single word = 1")
+    }
+    // input: empty text; expected: 0
+    if word_count("") != 0 {
+        print("FAIL empty text expected 0 got " + str_of_i64(word_count("")))
+        failures = failures + 1
+    } else {
+        print("PASS empty text = 0")
+    }
+    // input: four words; expected: 4
+    if word_count("a b c d") != 4 {
+        print("FAIL four words expected 4 got " + str_of_i64(word_count("a b c d")))
+        failures = failures + 1
+    } else {
+        print("PASS four words = 4")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

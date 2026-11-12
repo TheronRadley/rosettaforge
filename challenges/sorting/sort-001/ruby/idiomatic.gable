@@ -1,0 +1,79 @@
+// RosettaForge challenge specimen
+// id:        sort-001
+// title:     Bubble sort a list of integers
+// category:  sorting
+// language:  ruby
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n^2) worst, O(n) best (already sorted), space O(n) for the result list.
+
+// Reference snippet (ruby, idiomatic):
+//   def bubble_sort(a):
+//       a = list(a)
+//       for i in range(len(a)):
+//           for j in range(len(a) - 1 - i):
+//               if a[j] > a[j + 1]: a[j], a[j + 1] = a[j + 1], a[j]
+//       return a
+
+// Edge variant covers reverse-sorted input, duplicates, and already-sorted input (early exit).
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "def bubble_sort(a):\n    a = list(a)\n    for i in range(len(a)):\n        for j in range(len(a) - 1 - i):\n            if a[j] > a[j + 1]: a[j], a[j + 1] = a[j + 1], a[j]\n    return a"
+}
+
+fn bubble_sort(values: [int]) -> [int] {
+    let result = values
+    var n = result.len
+    while n > 0 {
+        var swapped = false
+        var i = 0
+        while i < n - 1 {
+            if result[i] > result[i + 1] {
+                let t = result[i]
+                result[i] = result[i + 1]
+                result[i + 1] = t
+                swapped = true
+            }
+            i = i + 1
+        }
+        if !swapped { break }
+        n = n - 1
+    }
+    return result
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: sorted[0]; expected: 1
+    if bubble_sort([3, 1, 2])[0] != 1 {
+        print("FAIL sorted[0] expected 1 got " + str_of_i64(bubble_sort([3, 1, 2])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS sorted[0] = 1")
+    }
+    // input: sorted[1]; expected: 2
+    if bubble_sort([3, 1, 2])[1] != 2 {
+        print("FAIL sorted[1] expected 2 got " + str_of_i64(bubble_sort([3, 1, 2])[1]))
+        failures = failures + 1
+    } else {
+        print("PASS sorted[1] = 2")
+    }
+    // input: sorted[2]; expected: 3
+    if bubble_sort([3, 1, 2])[2] != 3 {
+        print("FAIL sorted[2] expected 3 got " + str_of_i64(bubble_sort([3, 1, 2])[2]))
+        failures = failures + 1
+    } else {
+        print("PASS sorted[2] = 3")
+    }
+    // input: single element; expected: 1
+    if bubble_sort([1])[0] != 1 {
+        print("FAIL single element expected 1 got " + str_of_i64(bubble_sort([1])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS single element = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

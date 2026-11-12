@@ -1,0 +1,59 @@
+// RosettaForge challenge specimen
+// id:        stk-001
+// title:     Balanced Parentheses
+// category:  stacks
+// language:  julia
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(1): depth counter as stack substitute.
+
+// Edge variant covers unclosed, wrong order, and three pairs.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "// reference implementation: counter-based balanced parentheses"
+}
+
+fn balanced(parens: str) -> bool {
+    var depth = 0
+    var i = 0
+    while i < parens.len {
+        let c = parens.slice(i, 1).text
+        if c == "(" {
+            depth = depth + 1
+        } else if c == ")" {
+            if depth == 0 { return false }
+            depth = depth - 1
+        }
+        i = i + 1
+    }
+    return depth == 0
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: unclosed; expected: false
+    if balanced("(()") != false {
+        print("FAIL unclosed expected false got " + str_of_bool(balanced("(()")))
+        failures = failures + 1
+    } else {
+        print("PASS unclosed = false")
+    }
+    // input: wrong order; expected: false
+    if balanced(")(") != false {
+        print("FAIL wrong order expected false got " + str_of_bool(balanced(")(")))
+        failures = failures + 1
+    } else {
+        print("PASS wrong order = false")
+    }
+    // input: three pairs; expected: true
+    if balanced("()()()") != true {
+        print("FAIL three pairs expected true got " + str_of_bool(balanced("()()()")))
+        failures = failures + 1
+    } else {
+        print("PASS three pairs = true")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

@@ -1,0 +1,12 @@
+// RosettaForge — language profile: rust
+// ================================
+// Reference-language profile for rust. Documentation only: syntax,
+// idioms, type system, and limitations as implemented by rust's own
+// toolchain (not by Gable). Snippets below are data, stored as Gable
+// strings; they are not executed by Gable.
+
+fn language_name() -> str { return "rust" }
+
+fn profile_notes(rust: str) -> str {
+    return "See challenges/rust/ for specimens in rust."
+}
