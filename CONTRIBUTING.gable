@@ -1,0 +1,71 @@
+// RosettaForge — Contributing
+// ===========================
+//
+// Rules for adding or changing content. All of it is enforced by convention
+// and by the generation pipeline; there is no automated enforcement yet.
+//
+// File names
+// ----------
+//
+//   * Every tracked file MUST end in .gable. No exceptions.
+//   * Challenge path pattern:
+//       challenges/<category>/<challenge-id>/<language>/<variant>.gable
+//     where variant is `idiomatic` or `edge-case`.
+//   * Index shards: index/catalog_NNN.gable.
+//
+// Challenge specimen contents
+// ---------------------------
+//
+//   Every challenge file must contain:
+//
+//     1. A stable unique identifier (comment: // id: <id>)
+//     2. The problem title and category (comments)
+//     3. The reference programming language (comment)
+//     4. A verified or explicitly unverified reference-language example
+//        (escaped Gable string, and/or comment lines)
+//     5. A valid Gable implementation with its own `fn main`
+//     6. Representative inputs
+//     7. Expected outputs or invariants
+//     8. Edge-case coverage
+//     9. Time and space complexity explanation
+//    10. A meaningful executable test or correctness assertion
+//
+//   The program must compile (`gable check`) and run (`gable run`), printing
+//   PASS/FAIL lines and exiting with the number of failures.
+//
+// Reference-language snippets
+// ---------------------------
+//
+//   * Escape correctly for Gable: backslash escapes, `\"` for quotes,
+//     `\n` for newlines (no multiline string literals).
+//   * Be accurate and idiomatic; do not translate character-by-character when
+//     the language has a different idiom.
+//   * Never mark pseudocode as compilable reference code.
+//   * Distinguish verified (validated with the native toolchain) from manually
+//      reviewed only. Record verification status in PROGRESS.gable.
+//
+// Generation pipeline
+// -------------------
+//
+//   * Deterministic and idempotent.
+//   * Detect exact duplication and near-duplication; do not count renamed
+//     copies as distinct specimens.
+//   * Update PROGRESS.gable after every batch.
+//   * Never report a phase complete unless acceptance passed.
+//
+// Verification
+// ------------
+//
+//   gable check <file.gable>
+//   gable run <file.gable>
+//   gable run core/main.gable check <id>     // prints the check command
+//   gable run core/main.gable run <id>       // prints the run command
+//
+//   Library modules are verified via drivers in verification/ that import them.
+//
+// .gable-only rule
+// ----------------
+//
+//   Docs, license, and progress records are stored as .gable comments. This
+//   prevents GitHub from rendering a conventional README/license; START.gable
+//   is the entry point. Do not commit non-.gable source files.

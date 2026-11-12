@@ -1,0 +1,60 @@
+// RosettaForge challenge specimen
+// id:        dp-001
+// title:     Nth Fibonacci number (iterative DP)
+// category:  dynamic_programming
+// language:  dart
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(1): iterative bottom-up DP with two rolling variables.
+
+// Reference snippet (dart, edge-case):
+//   int fib(int n) { if (n < 0) return 0; if (n < 2) return n; var (a, b) = (0, 1); for (var i = 2; i <= n; i++) { (a, b) = (b, a + b) }; return b }
+
+// Edge variant covers n = 2 boundary, n = 30, and re-checks small n.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "int fib(int n) { if (n < 0) return 0; if (n < 2) return n; var (a, b) = (0, 1); for (var i = 2; i <= n; i++) { (a, b) = (b, a + b) }; return b }"
+}
+
+fn fib(n: int) -> int {
+    if n < 2 { return n }
+    var a = 0
+    var b = 1
+    var i = 2
+    while i <= n {
+        let t = a + b
+        a = b
+        b = t
+        i = i + 1
+    }
+    return b
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: n = 2 boundary; expected: 1
+    if fib(2) != 1 {
+        print("FAIL n = 2 boundary expected 1 got " + str_of_i64(fib(2)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 2 boundary = 1")
+    }
+    // input: n = 30; expected: 832040
+    if fib(30) != 832040 {
+        print("FAIL n = 30 expected 832040 got " + str_of_i64(fib(30)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 30 = 832040")
+    }
+    // input: n = 5; expected: 5
+    if fib(5) != 5 {
+        print("FAIL n = 5 expected 5 got " + str_of_i64(fib(5)))
+        failures = failures + 1
+    } else {
+        print("PASS n = 5 = 5")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

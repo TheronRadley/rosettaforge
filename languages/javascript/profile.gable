@@ -1,0 +1,12 @@
+// RosettaForge — language profile: javascript
+// ================================
+// Reference-language profile for javascript. Documentation only: syntax,
+// idioms, type system, and limitations as implemented by javascript's own
+// toolchain (not by Gable). Snippets below are data, stored as Gable
+// strings; they are not executed by Gable.
+
+fn language_name() -> str { return "javascript" }
+
+fn profile_notes(javascript: str) -> str {
+    return "See challenges/javascript/ for specimens in javascript."
+}

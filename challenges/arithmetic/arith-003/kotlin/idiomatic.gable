@@ -1,0 +1,61 @@
+// RosettaForge challenge specimen
+// id:        arith-003
+// title:     Greatest Common Divisor
+// category:  arithmetic
+// language:  kotlin
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(log(min(a,b))), space O(1): Euclidean algorithm.
+
+// Edge variant covers zero arguments and both-zero case.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "fun gcd(a: Int, b: Int): Int { var x = a; var y = b; while (y != 0) { val t = y; y = x % y; x = t }; return x }"
+}
+
+fn gcd(a: int, b: int) -> int {
+    var x = a
+    var y = b
+    while y != 0 {
+        let t = y
+        y = x % y
+        x = t
+    }
+    return x
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: 48 and 18; expected: 6
+    if gcd(48, 18) != 6 {
+        print("FAIL 48 and 18 expected 6 got " + str_of_i64(gcd(48, 18)))
+        failures = failures + 1
+    } else {
+        print("PASS 48 and 18 = 6")
+    }
+    // input: coprime; expected: 1
+    if gcd(17, 5) != 1 {
+        print("FAIL coprime expected 1 got " + str_of_i64(gcd(17, 5)))
+        failures = failures + 1
+    } else {
+        print("PASS coprime = 1")
+    }
+    // input: one divides the other; expected: 25
+    if gcd(100, 25) != 25 {
+        print("FAIL one divides the other expected 25 got " + str_of_i64(gcd(100, 25)))
+        failures = failures + 1
+    } else {
+        print("PASS one divides the other = 25")
+    }
+    // input: primes; expected: 1
+    if gcd(7, 3) != 1 {
+        print("FAIL primes expected 1 got " + str_of_i64(gcd(7, 3)))
+        failures = failures + 1
+    } else {
+        print("PASS primes = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

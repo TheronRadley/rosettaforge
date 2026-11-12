@@ -1,0 +1,74 @@
+// RosettaForge challenge specimen
+// id:        sort-001
+// title:     Bubble sort a list of integers
+// category:  sorting
+// language:  swift
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n^2) worst, O(n) best (already sorted), space O(n) for the result list.
+
+// Reference snippet (swift, edge-case):
+//   func bubbleSort(_ a: [Int]) -> [Int] { var b = a; for i in 0..<b.count { var swapped = false; for j in 0..<b.count - 1 - i { if b[j] > b[j + 1] { b.swapAt(j, j + 1); swapped = true } }; if !swapped { break } }; return b }
+
+// Edge variant covers reverse-sorted input, duplicates, and already-sorted input (early exit).
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "func bubbleSort(_ a: [Int]) -> [Int] { var b = a; for i in 0..<b.count { var swapped = false; for j in 0..<b.count - 1 - i { if b[j] > b[j + 1] { b.swapAt(j, j + 1); swapped = true } }; if !swapped { break } }; return b }"
+}
+
+fn bubble_sort(values: [int]) -> [int] {
+    let result = values
+    var n = result.len
+    while n > 0 {
+        var swapped = false
+        var i = 0
+        while i < n - 1 {
+            if result[i] > result[i + 1] {
+                let t = result[i]
+                result[i] = result[i + 1]
+                result[i + 1] = t
+                swapped = true
+            }
+            i = i + 1
+        }
+        if !swapped { break }
+        n = n - 1
+    }
+    return result
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: reverse sorted[0]; expected: 1
+    if bubble_sort([5, 4, 3, 2, 1])[0] != 1 {
+        print("FAIL reverse sorted[0] expected 1 got " + str_of_i64(bubble_sort([5, 4, 3, 2, 1])[0]))
+        failures = failures + 1
+    } else {
+        print("PASS reverse sorted[0] = 1")
+    }
+    // input: reverse sorted[4]; expected: 5
+    if bubble_sort([5, 4, 3, 2, 1])[4] != 5 {
+        print("FAIL reverse sorted[4] expected 5 got " + str_of_i64(bubble_sort([5, 4, 3, 2, 1])[4]))
+        failures = failures + 1
+    } else {
+        print("PASS reverse sorted[4] = 5")
+    }
+    // input: duplicates middle; expected: 2
+    if bubble_sort([2, 2, 2])[1] != 2 {
+        print("FAIL duplicates middle expected 2 got " + str_of_i64(bubble_sort([2, 2, 2])[1]))
+        failures = failures + 1
+    } else {
+        print("PASS duplicates middle = 2")
+    }
+    // input: already sorted[2]; expected: 3
+    if bubble_sort([1, 2, 3])[2] != 3 {
+        print("FAIL already sorted[2] expected 3 got " + str_of_i64(bubble_sort([1, 2, 3])[2]))
+        failures = failures + 1
+    } else {
+        print("PASS already sorted[2] = 3")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

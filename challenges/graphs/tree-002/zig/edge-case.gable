@@ -1,0 +1,67 @@
+// RosettaForge challenge specimen
+// id:        tree-002
+// title:     Graph Reachable Count (BFS)
+// category:  graphs
+// language:  zig
+// variant:   edge-case
+// difficulty: medium
+// verified:  false
+// complexity: Time O(V^2) for matrix, space O(V): BFS with linear membership check.
+
+// Edge variant covers mutual edges, cycles, isolated nodes.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "// reference implementation: BFS reachable-node count from adjacency matrix"
+}
+
+fn reach_count(adj: [int; 9], start: int) -> int {
+    let seen: [int] = []
+    list_push(seen, start)
+    var head = 0
+    while head < seen.len {
+        let node = seen[head]
+        head = head + 1
+        var j = 0
+        while j < 3 {
+            if adj[node * 3 + j] == 1 {
+                var k = 0
+                var found = false
+                while k < seen.len {
+                    if seen[k] == j { found = true }
+                    k = k + 1
+                }
+                if !found { list_push(seen, j) }
+            }
+            j = j + 1
+        }
+    }
+    return seen.len
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: mutual edge 0<->1; expected: 2
+    if reach_count([0,1,0,1,0,0,0,0,0], 0) != 2 {
+        print("FAIL mutual edge 0<->1 expected 2 got " + str_of_i64(reach_count([0,1,0,1,0,0,0,0,0], 0)))
+        failures = failures + 1
+    } else {
+        print("PASS mutual edge 0<->1 = 2")
+    }
+    // input: cycle 0->1->2->0; expected: 3
+    if reach_count([0,1,0,0,0,1,1,0,0], 0) != 3 {
+        print("FAIL cycle 0->1->2->0 expected 3 got " + str_of_i64(reach_count([0,1,0,0,0,1,1,0,0], 0)))
+        failures = failures + 1
+    } else {
+        print("PASS cycle 0->1->2->0 = 3")
+    }
+    // input: isolated last node; expected: 1
+    if reach_count([0,0,0,0,0,0,0,0,0], 2) != 1 {
+        print("FAIL isolated last node expected 1 got " + str_of_i64(reach_count([0,0,0,0,0,0,0,0,0], 2)))
+        failures = failures + 1
+    } else {
+        print("PASS isolated last node = 1")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

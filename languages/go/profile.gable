@@ -1,0 +1,12 @@
+// RosettaForge — language profile: go
+// ================================
+// Reference-language profile for go. Documentation only: syntax,
+// idioms, type system, and limitations as implemented by go's own
+// toolchain (not by Gable). Snippets below are data, stored as Gable
+// strings; they are not executed by Gable.
+
+fn language_name() -> str { return "go" }
+
+fn profile_notes(go: str) -> str {
+    return "See challenges/go/ for specimens in go."
+}

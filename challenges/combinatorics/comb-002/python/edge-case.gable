@@ -1,0 +1,59 @@
+// RosettaForge challenge specimen
+// id:        comb-002
+// title:     Catalan Numbers
+// category:  combinatorics
+// language:  python
+// variant:   edge-case
+// difficulty: medium
+// verified:  false
+// complexity: Time O(n^2), space O(n): DP recurrence C(n) = sum C(j)*C(n-1-j).
+
+// Edge variant adds explicit C(0)=1 guard (same DP, clearer base case).
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "def catalan(n):\\n    c = [1]\\n    for i in range(1, n + 1):\\n        c.append(0)\\n        for j in range(i):\\n            c[i] += c[j] * c[i - 1 - j]\\n    return c[n]"
+}
+
+fn catalan(n: int) -> int {
+    let c: [int] = [1]
+    var i = 1
+    while i <= n {
+        list_push(c, 0)
+        var j = 0
+        while j < i {
+            let v = c[i] + c[j] * c[i - 1 - j]
+            c[i] = v
+            j = j + 1
+        }
+        i = i + 1
+    }
+    return c[n]
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: zero; expected: 1
+    if catalan(0) != 1 {
+        print("FAIL zero expected 1 got " + str_of_i64(catalan(0)))
+        failures = failures + 1
+    } else {
+        print("PASS zero = 1")
+    }
+    // input: C(4); expected: 14
+    if catalan(4) != 14 {
+        print("FAIL C(4) expected 14 got " + str_of_i64(catalan(4)))
+        failures = failures + 1
+    } else {
+        print("PASS C(4) = 14")
+    }
+    // input: C(5); expected: 42
+    if catalan(5) != 42 {
+        print("FAIL C(5) expected 42 got " + str_of_i64(catalan(5)))
+        failures = failures + 1
+    } else {
+        print("PASS C(5) = 42")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

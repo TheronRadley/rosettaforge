@@ -1,0 +1,60 @@
+// RosettaForge challenge specimen
+// id:        arith-002
+// title:     Factorial
+// category:  arithmetic
+// language:  ruby
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(1): iterative multiplication loop.
+
+// Edge variant covers large factorials that still fit in i64.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "def factorial(n)\\n    result = 1\\n    (2..n).each { |i| result *= i }\\n    result\\nend"
+}
+
+fn factorial(n: int) -> int {
+    var result = 1
+    var i = 2
+    while i <= n {
+        result = result * i
+        i = i + 1
+    }
+    return result
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: zero factorial; expected: 1
+    if factorial(0) != 1 {
+        print("FAIL zero factorial expected 1 got " + str_of_i64(factorial(0)))
+        failures = failures + 1
+    } else {
+        print("PASS zero factorial = 1")
+    }
+    // input: one factorial; expected: 1
+    if factorial(1) != 1 {
+        print("FAIL one factorial expected 1 got " + str_of_i64(factorial(1)))
+        failures = failures + 1
+    } else {
+        print("PASS one factorial = 1")
+    }
+    // input: 5 factorial; expected: 120
+    if factorial(5) != 120 {
+        print("FAIL 5 factorial expected 120 got " + str_of_i64(factorial(5)))
+        failures = failures + 1
+    } else {
+        print("PASS 5 factorial = 120")
+    }
+    // input: 10 factorial; expected: 3628800
+    if factorial(10) != 3628800 {
+        print("FAIL 10 factorial expected 3628800 got " + str_of_i64(factorial(10)))
+        failures = failures + 1
+    } else {
+        print("PASS 10 factorial = 3628800")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

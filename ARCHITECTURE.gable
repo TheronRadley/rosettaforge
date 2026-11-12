@@ -1,0 +1,65 @@
+// RosettaForge — Architecture
+// ===========================
+//
+// Layout (every tracked file ends in .gable):
+//
+//   START.gable / LICENSE.gable / ARCHITECTURE.gable / CONTRIBUTING.gable /
+//   GABLE_COMPATIBILITY.gable / PROGRESS.gable
+//   core/main.gable            CLI entry point (one `main`, bounded imports)
+//   core/catalog.gable         Entry struct and catalog helpers
+//   core/search.gable          keyword search over index shards
+//   core/filters.gable         category / language / difficulty filters
+//   core/viewer.gable          specimen metadata display
+//   core/scoring.gable         verification scoring helpers
+//   core/validation.gable      input and argument validation
+//   library/*/                 reusable Gable primitives (no `main`)
+//   languages/*/               reference-language profiles
+//   challenges/*/              challenge specimens, each with its own `main`
+//   index/catalog_NNN.gable    bounded index shards: metadata only, [Entry] data
+//   verification/*/            test drivers and verification records
+//   benchmarks/*, documentation/*, experiments/*
+//
+// Compilation boundaries (verified against Gable v0.3, commit
+// 58405ffd9a6e9201ae7e355faf8e6002de721034):
+//
+//   * One program = root file + every imported file, transitively.
+//   * Maximum 512 source files per compilation.
+//   * Maximum import depth 64.
+//   * Single program-wide namespace: no duplicate declaration names.
+//   * 64 MiB per file, 256 MiB total per compilation.
+//
+// Design rules
+// ------------
+//
+//   1. NEVER compile all 10,000 challenge files into one executable.
+//      Every challenge specimen is a standalone program with its own `main`
+//      and imports nothing (or almost nothing), so each compilation is one file.
+//
+//   2. The CLI imports only index shards (metadata), never challenge files.
+//      Shards stay small (a few hundred entries each); total import graph stays
+//      far below 512 files and depth 64.
+
+//   3. Each index shard declares its own entry-list variable
+//      (catalog_000, catalog_001, ...). The Entry struct is declared once in
+//      core/catalog.gable. Shard file names and variable names are unique.
+//
+//   4. Gable cannot spawn child processes. The CLI prints the exact command to
+//      run or check a specimen; the user runs it directly.
+//
+//   5. All executable project logic is Gable. Other languages appear only as
+//      escaped reference snippets inside Gable strings or comments.
+//
+//   6. No mutable global state beyond catalog data; functions are pure where
+//      practical; file I/O uses fs_read_text / fs_write_text_atomic only in
+//      tools, never in challenge specimens.
+//
+//   7. Deterministic, idempotent generation: re-running the generator produces
+//      identical files; validated files are never overwritten.
+//
+//   8. Avoid O(n^2) string concatenation in loops: collect [str] and .join().
+//
+//   9. Respect int wrapping, truncating division, division-by-zero trap (exit
+//      70), byte-length string semantics, and bounds-checked indexing.
+//
+//   10. Library modules have no `main`; they are verified through small driver
+//       programs in verification/ that import them.

@@ -1,0 +1,49 @@
+// RosettaForge challenge specimen
+// id:        rec-002
+// title:     Tower of Hanoi Move Count
+// category:  recursion
+// language:  rust
+// variant:   edge-case
+// difficulty: medium
+// verified:  false
+// complexity: Time O(2^n), space O(n): recursive move count T(n) = 2*T(n-1) + 1.
+
+// Edge variant tests 4 and 5 disks.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "pub fn hanoi(n: u64) -> u64 { if n == 0 { return 0 }; if n == 1 { return 1 }; hanoi(n - 1) + 1 + hanoi(n - 1) }"
+}
+
+fn hanoi(n: int) -> int {
+    if n <= 0 { return 0 }
+    if n == 1 { return 1 }
+    return hanoi(n - 1) + 1 + hanoi(n - 1)
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: zero; expected: 0
+    if hanoi(0) != 0 {
+        print("FAIL zero expected 0 got " + str_of_i64(hanoi(0)))
+        failures = failures + 1
+    } else {
+        print("PASS zero = 0")
+    }
+    // input: four disks; expected: 15
+    if hanoi(4) != 15 {
+        print("FAIL four disks expected 15 got " + str_of_i64(hanoi(4)))
+        failures = failures + 1
+    } else {
+        print("PASS four disks = 15")
+    }
+    // input: five disks; expected: 31
+    if hanoi(5) != 31 {
+        print("FAIL five disks expected 31 got " + str_of_i64(hanoi(5)))
+        failures = failures + 1
+    } else {
+        print("PASS five disks = 31")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

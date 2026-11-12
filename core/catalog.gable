@@ -1,0 +1,142 @@
+// RosettaForge core — catalog model
+// =================================
+//
+// The `Entry` type describes one challenge specimen in the searchable index.
+// Index shards (index/catalog_NNN.gable) declare arrays of Entry; the CLI
+// imports the shards and searches them. Shards contain metadata only, never
+// challenge implementations, so the CLI import graph stays small.
+
+struct Entry {
+    id: str
+    title: str
+    category: str
+    language: str
+    variant: str
+    path: str
+    verified: bool
+    difficulty: str
+}
+
+struct EntryLookup {
+    ok: bool
+    entry: Entry
+}
+
+// Empty entry used as the not-found sentinel.
+fn empty_entry() -> Entry {
+    return Entry("", "", "", "", "", "", false, "")
+}
+
+// True when `keyword` occurs anywhere searchable in `entry`. Case-sensitive
+// substring search; Gable has no case conversion, so keywords must match case.
+fn entry_contains(entry: Entry, keyword: str) -> bool {
+    if entry.id.find(keyword).ok { return true }
+    if entry.title.find(keyword).ok { return true }
+    if entry.category.find(keyword).ok { return true }
+    if entry.language.find(keyword).ok { return true }
+    return false
+}
+
+fn print_entry(entry: Entry) {
+    print(entry.id + " | " + entry.category + " | " + entry.language + " | " + entry.variant + " | " + entry.path)
+}
+
+fn print_entry_full(entry: Entry) {
+    print("id:         " + entry.id)
+    print("title:      " + entry.title)
+    print("category:   " + entry.category)
+    print("language:   " + entry.language)
+    print("variant:    " + entry.variant)
+    print("verified:   " + str_of_bool(entry.verified))
+    print("difficulty: " + entry.difficulty)
+    print("path:       " + entry.path)
+}
+
+fn count_all(entries: [Entry]) -> int {
+    return entries.len
+}
+
+fn count_matches(entries: [Entry], keyword: str) -> int {
+    var n = 0
+    for e in entries {
+        if entry_contains(e, keyword) { n = n + 1 }
+    }
+    return n
+}
+
+fn print_matches(entries: [Entry], keyword: str) -> int {
+    var n = 0
+    for e in entries {
+        if entry_contains(e, keyword) {
+            print_entry(e)
+            n = n + 1
+        }
+    }
+    return n
+}
+
+fn count_category(entries: [Entry], cat: str) -> int {
+    var n = 0
+    for e in entries {
+        if e.category == cat { n = n + 1 }
+    }
+    return n
+}
+
+fn print_category(entries: [Entry], cat: str) -> int {
+    var n = 0
+    for e in entries {
+        if e.category == cat {
+            print_entry(e)
+            n = n + 1
+        }
+    }
+    return n
+}
+
+fn count_language(entries: [Entry], lang: str) -> int {
+    var n = 0
+    for e in entries {
+        if e.language == lang { n = n + 1 }
+    }
+    return n
+}
+
+fn print_language(entries: [Entry], lang: str) -> int {
+    var n = 0
+    for e in entries {
+        if e.language == lang {
+            print_entry(e)
+            n = n + 1
+        }
+    }
+    return n
+}
+
+fn count_difficulty(entries: [Entry], dif: str) -> int {
+    var n = 0
+    for e in entries {
+        if e.difficulty == dif { n = n + 1 }
+    }
+    return n
+}
+
+fn print_difficulty(entries: [Entry], dif: str) -> int {
+    var n = 0
+    for e in entries {
+        if e.difficulty == dif {
+            print_entry(e)
+            n = n + 1
+        }
+    }
+    return n
+}
+
+fn find_entry(entries: [Entry], id: str) -> EntryLookup {
+    for e in entries {
+        if e.id == id {
+            return EntryLookup(true, e)
+        }
+    }
+    return EntryLookup(false, empty_entry())
+}

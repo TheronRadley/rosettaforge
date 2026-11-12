@@ -1,0 +1,63 @@
+// RosettaForge challenge specimen
+// id:        seq-001
+// title:     Maximum value in an array
+// category:  arrays
+// language:  zig
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(1): single pass, running maximum.
+
+// Reference snippet (zig, idiomatic):
+//   export fn maxVal(a: []const i32) i32 { var best = a[0]; for (a) |x| if (x > best) best = x; return best; }
+
+// Edge variant places the maximum at the first and last positions and uses a single dominant value.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "export fn maxVal(a: []const i32) i32 { var best = a[0]; for (a) |x| if (x > best) best = x; return best; }"
+}
+
+fn max_val(values: [int; 5]) -> int {
+    var best = values[0]
+    var i = 1
+    while i < 5 {
+        if values[i] > best { best = values[i] }
+        i = i + 1
+    }
+    return best
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: mixed values; expected: 9
+    if max_val([5, 2, 9, 1, 7]) != 9 {
+        print("FAIL mixed values expected 9 got " + str_of_i64(max_val([5, 2, 9, 1, 7])))
+        failures = failures + 1
+    } else {
+        print("PASS mixed values = 9")
+    }
+    // input: all negative; expected: -1
+    if max_val([-3, -1, -7, -2, -5]) != -1 {
+        print("FAIL all negative expected -1 got " + str_of_i64(max_val([-3, -1, -7, -2, -5])))
+        failures = failures + 1
+    } else {
+        print("PASS all negative = -1")
+    }
+    // input: all equal; expected: 4
+    if max_val([4, 4, 4, 4, 4]) != 4 {
+        print("FAIL all equal expected 4 got " + str_of_i64(max_val([4, 4, 4, 4, 4])))
+        failures = failures + 1
+    } else {
+        print("PASS all equal = 4")
+    }
+    // input: ascending; expected: 5
+    if max_val([1, 2, 3, 4, 5]) != 5 {
+        print("FAIL ascending expected 5 got " + str_of_i64(max_val([1, 2, 3, 4, 5])))
+        failures = failures + 1
+    } else {
+        print("PASS ascending = 5")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

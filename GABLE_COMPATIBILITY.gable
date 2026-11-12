@@ -1,0 +1,82 @@
+// RosettaForge — Gable Compatibility Report
+// =========================================
+//
+// Upstream compiler: https://github.com/gablelang/gable
+// Commit:            58405ffd9a6e9201ae7e355faf8e6002de721034
+// Version:           gable 0.3.0 (language version 0.3)
+// Verified:          compiler built from source with GCC 12.2.0; smoke-tested
+//                    (hello world, imports, lists, structs, strings, file IO,
+//                     args, parsing, slicing).
+//
+// Source and syntax
+// -----------------
+//
+//   * UTF-8 source; ASCII identifiers only.
+//   * Line comments `//` and nested block comments `/* */`.
+//   * Statements end at line break; `;` accepted and ignored.
+//   * Keywords: fn let var return if else while true false struct import as
+//     break continue for in.
+//
+// Types
+// -----
+//
+//   * int = signed 64-bit (i64 alias); i8 i16 i32 i64; u8 u16 u32 u64.
+//   * bool; str (byte-length, explicit length, may contain any byte except NUL);
+//     void.
+//   * Structs: value semantics, no self-containment, fields in own namespace,
+//     field names must not repeat across structs.
+//   * Arrays [T; N], N in 1..1,000,000. Lists [T]: growable, shared handle,
+//     `.push`, `.len`, indexing, iteration.
+//
+// Statements and expressions
+// --------------------------
+//
+//   * let (immutable) / var (mutable), every binding initialized.
+//   * `let x = fallible() else { ... }` requires an `ok: bool` field; every path
+//     of the else block must return/break/continue.
+//   * if / else if / else; while; `for i in a..b` (upper excluded); `for x in
+//     list/array`; break/continue; return. Bodies must be braced.
+//   * Operators: + - * / % (truncating div, sign of dividend; div-by-zero traps
+//     exit 70; min/-1 wraps) < <= > >= == != (int/bool/str only) && || ! as.
+//   * No implicit conversions; `as` explicit only. No bitwise/shift (`&` `\|`
+//     reserved). No generics, traits, closures, pointers, enums, maps, exceptions.
+//   * No overloading; one function per program-wide name.
+//
+// Built-ins (spec section 9)
+// --------------------------
+//
+//   print eprint arg_count arg(i) fs_read_text fs_write_text
+//   fs_write_text_atomic fs_lock fs_unlock str_of_i64 str_of_bool parse_i64
+//   str_find str_slice str_trim list_push
+//   Methods: text.trim() text.split() text.find() text.slice() parts.join()
+//     list.push(); `.len` is a field, not a method.
+//
+//   Result structs: FileReadResult FileWriteResult ParseResult FindResult
+//     SliceResult — fields ok/text/error/value/index/code as applicable.
+//
+// Limits
+// ------
+//
+//   * 512 source files per compilation; 64 MiB per file; 256 MiB total.
+//   * Import depth at most 64. Single program-wide namespace.
+//   * Exit statuses: 0 success, 1 compile failure, 2 usage, 70 trap/internal.
+//   * Runtime traps: div/rem by zero, out-of-bounds index (exit 70).
+//
+// Backend
+// -------
+//
+//   * Native compilation via C17 backend using host C compiler (GABLE_CC).
+//   * Automatic GC, single-threaded, byte-oriented strings.
+//
+// Implications for RosettaForge
+// -----------------------------
+//
+//   * No maps: use lists of structs or parallel lists for lookups.
+//   * No multiline string literals: embed reference snippets as escaped
+//     single-line strings with \n, or as `//` comment lines.
+//   * Interpolation accepts str/int/bool only; struct fields must be copied to
+//     locals before interpolating.
+//   * No child-process spawning: CLI prints commands instead of executing them.
+//   * Every challenge = independent compilation unit (1 file, own `main`).
+//   * CLI import graph bounded: only core modules + index shards, far below 512
+//     files and depth 64.

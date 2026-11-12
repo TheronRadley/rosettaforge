@@ -1,0 +1,71 @@
+// RosettaForge challenge specimen
+// id:        str-003
+// title:     Anagram Check
+// category:  strings
+// language:  swift
+// variant:   idiomatic
+// difficulty: medium
+// verified:  false
+// complexity: Time O(n^2), space O(1): character-count comparison without extra memory.
+
+// Edge variant adds explicit length check and different-lengths case.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "func areAnagrams(_ a: String, _ b: String) -> Bool { a.sorted() == b.sorted() }"
+}
+
+fn count_char(s: str, ch: str) -> int {
+    var n = 0
+    var i = 0
+    while i < s.len {
+        if s.slice(i, 1).text == ch { n = n + 1 }
+        i = i + 1
+    }
+    return n
+}
+
+fn are_anagrams(a: str, b: str) -> bool {
+    if a.len != b.len { return false }
+    var i = 0
+    while i < a.len {
+        let ch = a.slice(i, 1).text
+        if count_char(a, ch) != count_char(b, ch) { return false }
+        i = i + 1
+    }
+    return true
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: anagram pair; expected: true
+    if are_anagrams("listen", "silent") != true {
+        print("FAIL anagram pair expected true got " + str_of_bool(are_anagrams("listen", "silent")))
+        failures = failures + 1
+    } else {
+        print("PASS anagram pair = true")
+    }
+    // input: not anagrams; expected: false
+    if are_anagrams("hello", "world") != false {
+        print("FAIL not anagrams expected false got " + str_of_bool(are_anagrams("hello", "world")))
+        failures = failures + 1
+    } else {
+        print("PASS not anagrams = false")
+    }
+    // input: empty strings; expected: true
+    if are_anagrams("", "") != true {
+        print("FAIL empty strings expected true got " + str_of_bool(are_anagrams("", "")))
+        failures = failures + 1
+    } else {
+        print("PASS empty strings = true")
+    }
+    // input: same single char; expected: true
+    if are_anagrams("a", "a") != true {
+        print("FAIL same single char expected true got " + str_of_bool(are_anagrams("a", "a")))
+        failures = failures + 1
+    } else {
+        print("PASS same single char = true")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

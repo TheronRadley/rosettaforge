@@ -1,0 +1,51 @@
+// RosettaForge — Progress Record
+// ==============================
+// Updated after every significant batch. Source of truth for resume.
+
+// Upstream Gable commit: 58405ffd9a6e9201ae7e355faf8e6002de721034
+// Gable version:         0.3.0 (language version 0.3)
+
+// Phase status
+// ------------
+//   Phase 1 (research and feasibility):      COMPLETE
+//   Phase 2 (functional foundation):         COMPLETE — 880 challenge files generated (240 batch 1 + 640 batch 2)
+//   Phase 3 (initial 100 programs):          PENDING
+//   Phase 4 (first 1,000 programs):          PENDING
+//   Phase 5 (scale to 5,000):                PENDING
+//   Phase 6 (reach 10,000+):                 PENDING
+//   Phase 7 (hardening):                     PENDING
+
+// Counts
+ // ------
+//   Tracked .gable files:           916
+//   Genuine challenge .gable files: 880
+//   Distinct challenge specifications: 19
+//   Reference languages represented: 20 / 20
+//   Challenge-language pairings:     880
+
+//   Compilation successes:         880 (all pass gable check)
+//   Runtime verification successes: 880 (all pass gable run)
+//   Unverified examples:           0
+//   Known failures:                none
+
+// Coverage by language: c=44, cpp=44, csharp=44, dart=44, elixir=44, go=44, haskell=44, java=44, javascript=44, julia=44, kotlin=44, lua=44, php=44, python=44, ruby=44, rust=44, scala=44, swift=44, typescript=44, zig=44
+// Coverage by category: arithmetic=120, arrays=40, boolean_logic=40, combinatorics=40, dynamic_programming=40, graphs=40, recursion=40, sorting=120, stacks=40, strings=80, trees=40
+
+// Batch 1 (complete, verified): arith-001, bool-001, seq-001, str-001 (6 challenges x 20 langs x 2 variants = 240)
+// Batch 2 (complete, verified): arith-002, arith-003, arith-004, comb-002, seq-002, seq-003, str-002, str-003, sort-002, sort-003, rec-001, rec-002, stk-001, stk-002, tree-001, tree-002 (16 challenges x 20 langs x 2 variants = 640)
+
+// Last completed batch:     batch 2 (640 challenge files, all pass check+run)
+// Next pending batch:       author batch 3 challenges (target: 1000+ total specimens)
+// Resume commands
+// ---------------
+//   cd /tmp/gable-upstream && cmake --build build/debug
+//   /tmp/gable-upstream/build/debug/gable run core/main.gable -- stats
+//   gable check challenges/<category>/<id>/<lang>/<variant>.gable
+//   gable run challenges/<category>/<id>/<lang>/<variant>.gable
+
+// Resume commands
+// ---------------
+//   cd /tmp/gable-upstream && cmake --build build/debug
+//   /tmp/gable-upstream/build/debug/gable run core/main.gable -- stats
+//   gable check challenges/<category>/<id>/<lang>/<variant>.gable
+//   gable run challenges/<category>/<id>/<lang>/<variant>.gable

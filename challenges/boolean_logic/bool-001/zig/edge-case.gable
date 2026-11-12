@@ -1,0 +1,50 @@
+// RosettaForge challenge specimen
+// id:        bool-001
+// title:     Majority of three booleans
+// category:  boolean_logic
+// language:  zig
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(1), space O(1): boolean majority via OR of AND pairs.
+
+// Reference snippet (zig, edge-case):
+//   export fn majority(a: bool, b: bool, c: bool) bool { return @boolToInt(a) + @boolToInt(b) + @boolToInt(c) >= 2; }
+
+// Edge variant covers all-true and single-true cases.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "export fn majority(a: bool, b: bool, c: bool) bool { return @boolToInt(a) + @boolToInt(b) + @boolToInt(c) >= 2; }"
+}
+
+fn majority(a: bool, b: bool, c: bool) -> bool {
+    return (a && b) || (a && c) || (b && c)
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: all true; expected: true
+    if majority(true, true, true) != true {
+        print("FAIL all true expected true got " + str_of_bool(majority(true, true, true)))
+        failures = failures + 1
+    } else {
+        print("PASS all true = true")
+    }
+    // input: one true; expected: false
+    if majority(false, false, true) != false {
+        print("FAIL one true expected false got " + str_of_bool(majority(false, false, true)))
+        failures = failures + 1
+    } else {
+        print("PASS one true = false")
+    }
+    // input: only first; expected: false
+    if majority(true, false, false) != false {
+        print("FAIL only first expected false got " + str_of_bool(majority(true, false, false)))
+        failures = failures + 1
+    } else {
+        print("PASS only first = false")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

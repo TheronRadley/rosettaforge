@@ -1,0 +1,55 @@
+// RosettaForge challenge specimen
+// id:        rec-001
+// title:     Factorial Recursive
+// category:  recursion
+// language:  scala
+// variant:   idiomatic
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(n): recursive factorial with base case n <= 1.
+
+// Edge variant tests larger factorial values that still fit i64.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "def factorial(n: Int): Long = if (n <= 1) 1L else n * factorial(n - 1)"
+}
+
+fn factorial(n: int) -> int {
+    if n <= 1 { return 1 }
+    return n * factorial(n - 1)
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: base case 0; expected: 1
+    if factorial(0) != 1 {
+        print("FAIL base case 0 expected 1 got " + str_of_i64(factorial(0)))
+        failures = failures + 1
+    } else {
+        print("PASS base case 0 = 1")
+    }
+    // input: base case 1; expected: 1
+    if factorial(1) != 1 {
+        print("FAIL base case 1 expected 1 got " + str_of_i64(factorial(1)))
+        failures = failures + 1
+    } else {
+        print("PASS base case 1 = 1")
+    }
+    // input: recursive case; expected: 120
+    if factorial(5) != 120 {
+        print("FAIL recursive case expected 120 got " + str_of_i64(factorial(5)))
+        failures = failures + 1
+    } else {
+        print("PASS recursive case = 120")
+    }
+    // input: larger recursive case; expected: 3628800
+    if factorial(10) != 3628800 {
+        print("FAIL larger recursive case expected 3628800 got " + str_of_i64(factorial(10)))
+        failures = failures + 1
+    } else {
+        print("PASS larger recursive case = 3628800")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}

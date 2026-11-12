@@ -1,0 +1,49 @@
+// RosettaForge index shard
+// catalog_002: 40 catalog entries (metadata only).
+//
+import "../core/catalog.gable"
+
+fn catalog_002() -> [Entry] {
+    return [
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "python", "idiomatic", "challenges/boolean_logic/bool-001/python/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "python", "edge-case", "challenges/boolean_logic/bool-001/python/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "javascript", "idiomatic", "challenges/boolean_logic/bool-001/javascript/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "javascript", "edge-case", "challenges/boolean_logic/bool-001/javascript/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "typescript", "idiomatic", "challenges/boolean_logic/bool-001/typescript/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "typescript", "edge-case", "challenges/boolean_logic/bool-001/typescript/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "rust", "idiomatic", "challenges/boolean_logic/bool-001/rust/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "rust", "edge-case", "challenges/boolean_logic/bool-001/rust/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "c", "idiomatic", "challenges/boolean_logic/bool-001/c/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "c", "edge-case", "challenges/boolean_logic/bool-001/c/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "cpp", "idiomatic", "challenges/boolean_logic/bool-001/cpp/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "cpp", "edge-case", "challenges/boolean_logic/bool-001/cpp/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "csharp", "idiomatic", "challenges/boolean_logic/bool-001/csharp/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "csharp", "edge-case", "challenges/boolean_logic/bool-001/csharp/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "java", "idiomatic", "challenges/boolean_logic/bool-001/java/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "java", "edge-case", "challenges/boolean_logic/bool-001/java/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "go", "idiomatic", "challenges/boolean_logic/bool-001/go/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "go", "edge-case", "challenges/boolean_logic/bool-001/go/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "kotlin", "idiomatic", "challenges/boolean_logic/bool-001/kotlin/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "kotlin", "edge-case", "challenges/boolean_logic/bool-001/kotlin/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "swift", "idiomatic", "challenges/boolean_logic/bool-001/swift/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "swift", "edge-case", "challenges/boolean_logic/bool-001/swift/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "ruby", "idiomatic", "challenges/boolean_logic/bool-001/ruby/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "ruby", "edge-case", "challenges/boolean_logic/bool-001/ruby/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "php", "idiomatic", "challenges/boolean_logic/bool-001/php/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "php", "edge-case", "challenges/boolean_logic/bool-001/php/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "dart", "idiomatic", "challenges/boolean_logic/bool-001/dart/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "dart", "edge-case", "challenges/boolean_logic/bool-001/dart/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "scala", "idiomatic", "challenges/boolean_logic/bool-001/scala/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "scala", "edge-case", "challenges/boolean_logic/bool-001/scala/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "lua", "idiomatic", "challenges/boolean_logic/bool-001/lua/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "lua", "edge-case", "challenges/boolean_logic/bool-001/lua/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "zig", "idiomatic", "challenges/boolean_logic/bool-001/zig/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "zig", "edge-case", "challenges/boolean_logic/bool-001/zig/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "julia", "idiomatic", "challenges/boolean_logic/bool-001/julia/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "julia", "edge-case", "challenges/boolean_logic/bool-001/julia/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "haskell", "idiomatic", "challenges/boolean_logic/bool-001/haskell/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "haskell", "edge-case", "challenges/boolean_logic/bool-001/haskell/edge-case.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "elixir", "idiomatic", "challenges/boolean_logic/bool-001/elixir/idiomatic.gable", false, "easy"),
+        Entry("bool-001", "Majority of three booleans", "boolean_logic", "elixir", "edge-case", "challenges/boolean_logic/bool-001/elixir/edge-case.gable", false, "easy"),
+    ]
+}

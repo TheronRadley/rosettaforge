@@ -1,0 +1,56 @@
+// RosettaForge challenge specimen
+// id:        seq-001
+// title:     Maximum value in an array
+// category:  arrays
+// language:  php
+// variant:   edge-case
+// difficulty: easy
+// verified:  false
+// complexity: Time O(n), space O(1): single pass, running maximum.
+
+// Reference snippet (php, edge-case):
+//   function maxVal(array $a): int { if (empty($a)) return 0; $best = $a[0]; foreach ($a as $x) { if ($x > $best) $best = $x; }; return $best; }
+
+// Edge variant places the maximum at the first and last positions and uses a single dominant value.
+// Gable implementation and executable self-test below.
+
+fn reference_snippet() -> str {
+    return "function maxVal(array \$a): int { if (empty(\$a)) return 0; \$best = \$a[0]; foreach (\$a as \$x) { if (\$x > \$best) \$best = \$x; }; return \$best; }"
+}
+
+fn max_val(values: [int; 5]) -> int {
+    var best = values[0]
+    var i = 1
+    while i < 5 {
+        if values[i] > best { best = values[i] }
+        i = i + 1
+    }
+    return best
+}
+
+fn main() -> int {
+    var failures = 0
+    // input: maximum first; expected: 9
+    if max_val([9, 1, 2, 3, 4]) != 9 {
+        print("FAIL maximum first expected 9 got " + str_of_i64(max_val([9, 1, 2, 3, 4])))
+        failures = failures + 1
+    } else {
+        print("PASS maximum first = 9")
+    }
+    // input: maximum last; expected: 9
+    if max_val([1, 2, 3, 4, 9]) != 9 {
+        print("FAIL maximum last expected 9 got " + str_of_i64(max_val([1, 2, 3, 4, 9])))
+        failures = failures + 1
+    } else {
+        print("PASS maximum last = 9")
+    }
+    // input: single large value; expected: 42
+    if max_val([42, 1, 2, 3, 4]) != 42 {
+        print("FAIL single large value expected 42 got " + str_of_i64(max_val([42, 1, 2, 3, 4])))
+        failures = failures + 1
+    } else {
+        print("PASS single large value = 42")
+    }
+    print("failures: " + str_of_i64(failures))
+    return failures
+}
